@@ -36,6 +36,10 @@ will show a tree of wiki files, under the taskwiki root
 two -g fix
 </pre>
 will search (grep) the taskwiki root for the string "fix" and show a list of matching files
+<pre>
+two -h
+</pre>
+will show basic usage and help
 
 more features are planned; like working with attributes other than project, and printing taskwiki files
 
