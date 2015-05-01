@@ -16,3 +16,5 @@ follow the links above, these requirements have their own requirements, recommen
 ### Recommendations
 - vim-template
 - vim-tagbar
+
+.. more docs to come! suggestions and improvements welcome.
