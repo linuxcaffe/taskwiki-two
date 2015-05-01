@@ -3,6 +3,8 @@ _Task Wiki Opener_
 
 **two** is designed to open (and create and list and search) [taskwarrior](http://taskwarrior.org) related wiki files. It enhances [TaskWiki](https://github.com/tbabej/taskwiki), and can take advantage of [vim-template](https://github.com/aperezdc/vim-template) to quickly create and locate project wiki files.
 
+![taskwiki](http://picpaste.novarata.net/pics/9932eca5814fce48c26cd8105b4a165a.gif)
+
 ### Requirements
 - [taskwarrior](http://taskwarrior.org/download/) -- If you're not using this command-line todo manager, to track you tasks, then not much of the following will apply to you. Try it out and come back later!
 - [TaskWiki](https://github.com/tbabej/taskwiki) is the way to use taskwarrior tasks in
