@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# meta
+# two = Task Wiki Open
+# this script is project-centric, that is to say that
+# wiki files are related most to the project attribute.
+# TODO allow other attributes to be used, with [attribute:] 
+# the attribute is presumed to be "project"
+# This will allow wiki files to be created for other attributes,
+# like "tag:" or your favorite UDA
+
+USAGE='Usage: two [opt] [attribute:[value]]'
+# TODO check for TASKWIKI_ROOT envar
+TASKWIKI_ROOT=~/.task/wiki
+ATTRIB=project
+FILE_EXT=wiki
+TASKWIKI_INDEX_FILE=$TASKWIKI_ROOT/index.$FILE_EXT
+VIM_OPTS='-c :Tagbar'
+# TODO figure out -c NERDtree $FILES vim_option
+
+if [[ ${1} == '' ]]
+then
+ACTION=root_index
+
+# elif [[ ${1} == ':' ]]
+# (if arg ends with ":")
+# then
+# ATTRIB= (part before ":")
+# ACTION=attrib_index
+
+elif [[ ${1} == -h ]]
+then
+echo '        Task Wiki Open
+    '$USAGE
+echo -e '
+    with no other args, opens .task/wiki/index.wiki
+
+  -h  shows help (you are looking at it)
+
+  -l  show tree list of wiki files
+
+  -g  grep the taskwiki root for string
+  '
+  exit 0
+
+elif [[ ${1} == -l ]]
+then
+ACTION=list
+shift
+
+elif [[ ${1} == -g ]]
+then
+ACTION=grep
+shift
+fi
+
+if [[ $ACTION == 'root_index' ]]
+then
+vi $VIM_OPTS $TASKWIKI_INDEX_FILE
+exit 0
+
+# TODO elif [[ $ACTION == 'attrib_index' ]]
+
+elif [[ $ACTION == 'list' ]]
+then
+tree -P *.*.wiki -R $TASKWIKI_ROOT
+# TODO use $2 to filter list
+# TODO print corresponding numbers
+# TODO select N) from list
+exit 0
+
+elif [[ $ACTION == 'grep' ]]
+then
+grep -ilnr $1 $TASKWIKI_ROOT/*
+# TODO strip out $TASKWIKI_ROOT from list
+# TODO get grep line numbering working
+# TODO select N) from list
+exit 0
+fi
+
+# TODO sanity checks
+FILE=$1
+if [[ ${2} != '' ]]
+then
+echo 'too many arguments!'
+echo $USAGE
+exit 1
+fi
+# if [[ $FILE ~ ':' ]]
+# then 
+# echo 'found another attribute?'
+# TODO split $FILE into $ATTRIB:$FILE
+# exit 1
+# fi
+
+vi $VIM_OPTS $TASKWIKI_ROOT/$ATTRIB/$FILE.$ATTRIB.$FILE_EXT
+exit 0
