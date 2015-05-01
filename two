@@ -14,6 +14,7 @@ USAGE='Usage: two [opt] [attribute:[value]]'
 TASKWIKI_ROOT=~/.task/wiki
 ATTRIB=project
 FILE_EXT=wiki
+FILTER=''
 TASKWIKI_INDEX_FILE=$TASKWIKI_ROOT/index.$FILE_EXT
 VIM_OPTS='-c :Tagbar'
 # TODO figure out -c NERDtree $FILES vim_option
@@ -22,11 +23,11 @@ if [[ ${1} == '' ]]
 then
 ACTION=root_index
 
-# elif [[ ${1} == ':' ]]
+elif [[ ${1} =~ [0-9a-zA-Z]:$ ]]
 # (if arg ends with ":")
-# then
-# ATTRIB= (part before ":")
-# ACTION=attrib_index
+then
+ATTRIB=`echo $1 | cut -d: -f1`
+ACTION=attrib_index
 
 elif [[ ${1} == -h ]]
 then
@@ -46,7 +47,6 @@ echo -e '
 elif [[ ${1} == -l ]]
 then
 ACTION=list
-shift
 
 elif [[ ${1} == -g ]]
 then
@@ -59,12 +59,19 @@ then
 vi $VIM_OPTS $TASKWIKI_INDEX_FILE
 exit 0
 
-# TODO elif [[ $ACTION == 'attrib_index' ]]
+elif [[ $ACTION == 'attrib_index' ]]
+then
+vi $VIM_OPTS $TASKWIKI_ROOT/$ATTRIB/index.$FILE_EXT
+exit 0
 
 elif [[ $ACTION == 'list' ]]
 then
-tree -P *.*.wiki -R $TASKWIKI_ROOT
-# TODO use $2 to filter list
+if [[ ${2} != '' ]]
+then
+tree -P $2*.wiki -R $TASKWIKI_ROOT
+exit 0
+fi
+tree -P *.*.$FILE_EXT -R $TASKWIKI_ROOT
 # TODO print corresponding numbers
 # TODO select N) from list
 exit 0
