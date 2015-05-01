@@ -19,4 +19,24 @@ follow the links above, these requirements have their own requirements, recommen
 - vim-template
 - vim-tagbar
 
+### So what can two do?
+<pre>
+two
+</pre>
+will open the primary taskwiki index file at (by default) ~/.task/wiki/index.wiki
+<pre>
+two foo
+</pre>
+will open (by default) ~/.task/wiki/project/foo.project.wiki
+<pre>
+two -l
+</pre>
+will show a tree of wiki files, under the taskwiki root
+<pre>
+two -g fix
+</pre>
+will search (grep) the taskwiki root for the string "fix" and show a list of files
+
+more features are planned; like working with attributes other than project, and printing taskwiki files
+
 .. more docs to come! suggestions and improvements welcome.
