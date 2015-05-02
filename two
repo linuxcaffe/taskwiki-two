@@ -24,18 +24,15 @@ VIM_OPTS='-c :Tagbar'
 # TODO load `task _projects` matrix, for constraints and tab-completion
 
 
-if [[ ${1} == '' ]]
-then
+if [[ "$1" == '' ]]; then
 ACTION=root_index
 
-elif [[ ${1} =~ [$DIRS]:$ ]]
+elif [[ "$1" =~ [$DIRS]+:$ ]]; then
 # (if arg ends with ":")
-then
 ATTRIB=`echo $1 | cut -d: -f1`
 ACTION=attrib_index
 
-elif [[ ${1} == -h ]]
-then
+elif [[ "$1" == -h ]]; then
 echo '        Task Wiki Open
     '$USAGE
 echo -e '
@@ -49,42 +46,35 @@ echo -e '
   '
   exit 0
 
-elif [[ ${1} == -l ]]
-then
+elif [[ "$1" == -l ]]; then
 ACTION=list
 
-elif [[ ${1} == -g ]]
-then
+elif [[ "$1" == -g ]]; then
 ACTION=grep
 shift
 fi
 
-if [[ $ACTION == 'root_index' ]]
-then
+if [[ $ACTION == 'root_index' ]]; then
 vi $VIM_OPTS $TASKWIKI_INDEX_FILE
 exit 0
 
-elif [[ $ACTION == 'attrib_index' ]]
-then
+elif [[ $ACTION == 'attrib_index' ]]; then
 vi $VIM_OPTS $TASKWIKI_ROOT/$ATTRIB/index.$FILE_EXT
 exit 0
 
-elif [[ $ACTION == 'list' ]]
-then
-if [[ ${2} != '' ]]
-then
+elif [[ $ACTION == 'list' ]]; then
+if [[ "$2" != '' ]]; then
 tree -P $2*.wiki -R $TASKWIKI_ROOT
 exit 0
 fi
 # TODO BUG! the following only works from ~/
 # otherwise listing path is confused
-tree -P *.$FILE_EXT -R $TASKWIKI_ROOT
+tree -P *.$FILE_EXT -R $TASKWIKI_ROOT/
 # TODO print corresponding numbers
 # TODO select N) from list
 exit 0
 
-elif [[ $ACTION == 'grep' ]]
-then
+elif [[ $ACTION == 'grep' ]]; then
 grep -ilnr $1 $TASKWIKI_ROOT/*
 # TODO strip out $TASKWIKI_ROOT from list
 # TODO get grep line numbering working
@@ -94,23 +84,25 @@ fi
 
 # TODO sanity checks
 FILE=$1
-if [[ ${2} != '' ]]
-then
+if [[ "$2" != '' ]]; then
 echo 'too many arguments!'
 echo $USAGE
 exit 1
 fi
 
-if [[ "$1" =~ [0-9a-zA-Z]+:[0-9a-zA-Z]+ ]]
-then 
+if [[ "$1" =~ [0-9a-zA-Z]+:[0-9a-zA-Z]+ ]]; then
 ATTRIB=$(echo $1 | cut -d: -f1)
 FILE=$(echo $1 | cut -d: -f2)
-# if [[ $ATTRIB != [$DIRS] ]]
-# then
-# echo $ATTRIB' directory does not exist yet'
-# TODO "create it now?"
-# exit 1
-# fi
+if [[ $ATTRIB != [$DIRS]+ ]]; then
+echo $ATTRIB' directory does not exist yet'
+# # TODO "create it now?"
+exit 1
 fi
+fi
+if [[ "$1" =~ [\+:alnum:] ]]; then
+ATTRIB=tag
+FILE=$(echo $1 | cut -d+ -f2)
+fi
+
 vi $VIM_OPTS $TASKWIKI_ROOT/$ATTRIB/$FILE.$ATTRIB.$FILE_EXT
 exit 0
