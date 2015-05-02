@@ -11,19 +11,24 @@
 
 USAGE='Usage: two [opt] [attribute:[value]]'
 # TODO check for TASKWIKI_ROOT envar
-TASKWIKI_ROOT=~/.task/wiki
+TASKWIKI_ROOT=$HOME/.task/wiki
+DIRS='project|area|tag'
 ATTRIB=project
 FILE_EXT=wiki
+FILE=''
 FILTER=''
 TASKWIKI_INDEX_FILE=$TASKWIKI_ROOT/index.$FILE_EXT
 VIM_OPTS='-c :Tagbar'
 # TODO figure out -c NERDtree $FILES vim_option
 
+# TODO load `task _projects` matrix, for constraints and tab-completion
+
+
 if [[ ${1} == '' ]]
 then
 ACTION=root_index
 
-elif [[ ${1} =~ [0-9a-zA-Z]:$ ]]
+elif [[ ${1} =~ [$DIRS]:$ ]]
 # (if arg ends with ":")
 then
 ATTRIB=`echo $1 | cut -d: -f1`
@@ -71,7 +76,9 @@ then
 tree -P $2*.wiki -R $TASKWIKI_ROOT
 exit 0
 fi
-tree -P *.*.$FILE_EXT -R $TASKWIKI_ROOT
+# TODO BUG! the following only works from ~/
+# otherwise listing path is confused
+tree -P *.$FILE_EXT -R $TASKWIKI_ROOT
 # TODO print corresponding numbers
 # TODO select N) from list
 exit 0
@@ -93,12 +100,17 @@ echo 'too many arguments!'
 echo $USAGE
 exit 1
 fi
-# if [[ $FILE ~ ':' ]]
-# then 
-# echo 'found another attribute?'
-# TODO split $FILE into $ATTRIB:$FILE
+
+if [[ "$1" =~ [0-9a-zA-Z]+:[0-9a-zA-Z]+ ]]
+then 
+ATTRIB=$(echo $1 | cut -d: -f1)
+FILE=$(echo $1 | cut -d: -f2)
+# if [[ $ATTRIB != [$DIRS] ]]
+# then
+# echo $ATTRIB' directory does not exist yet'
+# TODO "create it now?"
 # exit 1
 # fi
-
+fi
 vi $VIM_OPTS $TASKWIKI_ROOT/$ATTRIB/$FILE.$ATTRIB.$FILE_EXT
 exit 0
