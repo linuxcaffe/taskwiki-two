@@ -11,7 +11,7 @@
 
 USAGE='Usage: two [opt] [attribute:[value]]'
 # TODO check for TASKWIKI_ROOT envar
-TASKWIKI_ROOT=$HOME/.task/wiki
+TASKWIKI_ROOT=~/.task/wiki
 DIRS='project|area|tag'
 ATTRIB=project
 FILE_EXT=wiki
@@ -19,6 +19,9 @@ FILE=''
 FILTER=''
 TASKWIKI_INDEX_FILE=$TASKWIKI_ROOT/index.$FILE_EXT
 VIM_OPTS='-c :Tagbar'
+TEMPLATE_DIR=~/.vim/template
+TEMPLATE_PREFIX=template
+TEMPLATE_EXT=wiki
 # TODO figure out -c NERDtree $FILES vim_option
 
 # TODO load `task _projects` matrix, for constraints and tab-completion
@@ -28,7 +31,6 @@ if [[ "$1" == '' ]]; then
 ACTION=root_index
 
 elif [[ "$1" =~ [$DIRS]+:$ ]]; then
-# (if arg ends with ":")
 ATTRIB=`echo $1 | cut -d: -f1`
 ACTION=attrib_index
 
@@ -52,6 +54,15 @@ ACTION=list
 elif [[ "$1" == -g ]]; then
 ACTION=grep
 shift
+
+elif [[ "$1" == -t ]]; then
+if [[ $TEMPLATE_DIR == '' ]]; then
+echo 'the template directory has not been defined!'
+exit 1
+fi
+ACTION=template
+shift
+
 fi
 
 if [[ $ACTION == 'root_index' ]]; then
@@ -63,23 +74,35 @@ vi $VIM_OPTS $TASKWIKI_ROOT/$ATTRIB/index.$FILE_EXT
 exit 0
 
 elif [[ $ACTION == 'list' ]]; then
-if [[ "$2" != '' ]]; then
-tree -P $2*.wiki -R $TASKWIKI_ROOT
-exit 0
-fi
+if [[ "$2" == '' ]]; then
 # TODO BUG! the following only works from ~/
 # otherwise listing path is confused
 tree -P *.$FILE_EXT -R $TASKWIKI_ROOT/
+exit 0
+fi
+tree -P $2*.wiki -R $TASKWIKI_ROOT/
 # TODO print corresponding numbers
 # TODO select N) from list
 exit 0
 
 elif [[ $ACTION == 'grep' ]]; then
-grep -ilnr $1 $TASKWIKI_ROOT/*
+grep -inrT $1 $TASKWIKI_ROOT/*
+#grep -ilnr $1 $TASKWIKI_ROOT/*
 # TODO strip out $TASKWIKI_ROOT from list
 # TODO get grep line numbering working
 # TODO select N) from list
 exit 0
+
+elif [[ $ACTION == 'template' ]]; then
+if [[ "$1" == '' ]]; then
+tree $TEMPLATE_DIR
+exit 0
+fi
+vi $TEMPLATE_DIR/$TEMPLATE_PREFIX.$1.$TEMPLATE_EXT
+exit 0
+
+# elif [[ $ACTION == 'template_list' ]]; then
+# exit 0
 fi
 
 # TODO sanity checks
@@ -93,16 +116,17 @@ fi
 if [[ "$1" =~ [0-9a-zA-Z]+:[0-9a-zA-Z]+ ]]; then
 ATTRIB=$(echo $1 | cut -d: -f1)
 FILE=$(echo $1 | cut -d: -f2)
-if [[ $ATTRIB != [$DIRS]+ ]]; then
-echo $ATTRIB' directory does not exist yet'
+# if [[ $ATTRIB != [$DIRS]+ ]]; then
+# echo $ATTRIB' directory does not exist yet'
 # # TODO "create it now?"
-exit 1
+# exit 1
+# fi
 fi
-fi
-if [[ "$1" =~ [\+:alnum:] ]]; then
+if [[ "$1" =~ \+[0-9a-zA-Z]+ ]]; then
 ATTRIB=tag
 FILE=$(echo $1 | cut -d+ -f2)
 fi
 
 vi $VIM_OPTS $TASKWIKI_ROOT/$ATTRIB/$FILE.$ATTRIB.$FILE_EXT
+ATTRIB=project
 exit 0
