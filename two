@@ -25,7 +25,7 @@ VIM_OPTS='-c :Tagbar'
 
 #####################################################
 ### edit the following if you know what you're doing;
-USAGE='Usage: two [opt] [attribute:[value]]'
+USAGE='Usage: two [proj_name | attribute:[value] | -g string | -l [name] | -t [template] | -h]'
 ATTRIB=project
 FILE=''
 FILTER=''
