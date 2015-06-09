@@ -35,7 +35,7 @@ Opens the primary taskwiki index file at (by default) ~/.task/wiki/index.wiki
 <pre>
 two foo
 </pre>
-Opens (by default) ~/.task/wiki/project/foo.project.wiki
+Opens (by default) ~/.task/wiki/project/foo.project.wiki (same as 'two project:foo')
 <pre>
 two area:bar
 </pre>
