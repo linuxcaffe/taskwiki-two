@@ -39,11 +39,16 @@ Opens (by default) ~/.task/wiki/project/foo.project.wiki
 <pre>
 two area:bar
 </pre>
-Would open ~/.task/wiki/area/bar.area.wiki (by default). Two is project.wiki centric, but you can easily use wiki files for task attributes _other_ than project: (like tag:something , or uda:random) by using the ":" colon separator.
+Would open ~/.task/wiki/area/bar.area.wiki (by default). Two is project-centric, but you can easily use wiki files for task attributes _other_ than project: (like tag:something , or uda:random) by using the ":" colon separator.
+The folders in the wiki root have to pre-exist for this to work. Future versions might prompt you to create them otherwise.
 <pre>
 two area:
 </pre>
 Would open ~/.task/wiki/area/index.wiki
+<pre>
+two +biz
+</pre>
+Would open ~/.task/wiki/tag/biz.tag.wiki (same as 'two tag:biz')
 <pre>
 two -l [name]
 </pre>
