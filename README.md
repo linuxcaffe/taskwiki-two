@@ -15,9 +15,11 @@ _Task Wiki Opener_
 
 To set your own locations or wiki filetypes, edit the initial variables in the script . 
 
-The defaults are ~/.task/wiki/project/my_project_name.wiki 
+The defaults are ~/.task/wiki/attribute/name.attribute.wiki 
 
-and templates in ~/.vim/template/template.project.wiki
+and templates in ~/.vim/template/template.attribute.wiki
+
+and the "attribute" is presumed to be "project" unless otherwise specified.
 
 ### Recommendations
 - vim-template
