@@ -13,7 +13,7 @@ _Task Wiki Opener_
 - [TaskWiki](https://github.com/tbabej/taskwiki) is the way to use taskwarrior tasks in
 - [vimwiki](https://github.com/vimwiki/vimwiki/tree/tags) is a personal wiki for vim
 
-Edit the initial variables in the script for your own locations or wiki filetypes. 
+To set your own locations or wiki filetypes, edit the initial variables in the script . 
 
 The defaults are ~/.task/wiki/project/my_project_name.wiki 
 
@@ -31,11 +31,11 @@ two [proj_name | attribute:[value] | -g string | -l [name] | -t [template] | -h]
 <pre>
 two
 </pre>
-opens the primary taskwiki index file at (by default) ~/.task/wiki/index.wiki
+Opens the primary taskwiki index file at (by default) ~/.task/wiki/index.wiki
 <pre>
 two foo
 </pre>
-opens (by default) ~/.task/wiki/project/foo.project.wiki
+Opens (by default) ~/.task/wiki/project/foo.project.wiki
 <pre>
 two area:bar
 </pre>
@@ -47,18 +47,20 @@ Would open ~/.task/wiki/area/index.wiki
 <pre>
 two -l [name]
 </pre>
-shows a tree of wiki files, under the taskwiki root, using [part_of_name] for case-insensitive search
+Shows a tree of wiki files, under the taskwiki root, using [part_of_name] for case-insensitive search
 <pre>
 two -g fix
 </pre>
-searches (grep) the files in the taskwiki root for the string "fix" and show a list of matching files
+Searches (grep) the files in the taskwiki root for the string "fix" and show a list of matching files
 <pre>
 two -t [template name]
 </pre>
-to edit template file or (without [template name]) displays a tree of the template folder
+To edit template file or (without [template name]) displays a tree of the template folder
+</pre>
+<pre>
 two -h
 </pre>
-shows basic usage and help
+Shows basic usage and help
 
 more features are planned; like working with attributes other than project, and printing taskwiki files
 
