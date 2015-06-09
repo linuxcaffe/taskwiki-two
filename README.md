@@ -14,7 +14,10 @@ _Task Wiki Opener_
 - [vimwiki](https://github.com/vimwiki/vimwiki/tree/tags) is a personal wiki for vim
 
 Edit the initial variables in the script for your own locations or wiki filetypes. 
-The defaults are ~/.task/wiki/project/my_project_name.wiki and templates in ~/.vim/template/template.project.wiki
+
+The defaults are ~/.task/wiki/project/my_project_name.wiki 
+
+and templates in ~/.vim/template/template.project.wiki
 
 ### Recommendations
 - vim-template
@@ -23,7 +26,7 @@ The defaults are ~/.task/wiki/project/my_project_name.wiki and templates in ~/.v
 ### Usage
 <pre>
 two [proj_name | attribute:[value] | -g string | -l [name] | -t [template] | -h]
-
+</pre>
 ### Examples
 <pre>
 two
