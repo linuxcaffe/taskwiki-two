@@ -1,7 +1,7 @@
 # two
 _Task Wiki Opener_ 
 
-**two** is designed to open or create or list or search [taskwarrior](http://taskwarrior.org) related wiki files, index files and template files. It enhances [TaskWiki](https://github.com/tbabej/taskwiki), and can take advantage of [vim-template](https://github.com/aperezdc/vim-template) to quickly edit/ create/ locate project wiki files.
+**two** is designed to open or create or list or search [taskwarrior](http://taskwarrior.org) related wiki files, index files and template files. It enhances [TaskWiki](https://github.com/tbabej/taskwiki), and can take advantage of [vim-template](https://github.com/aperezdc/vim-template) and [taskwiki-template](https://github.com/linuxcaffe/taskwiki-template) to quickly edit/ create/ locate project wiki files.
 
 ![taskwiki](http://picpaste.novarata.net/pics/9932eca5814fce48c26cd8105b4a165a.gif)
 * note: the above image doesn't actually show **two** in action, 
